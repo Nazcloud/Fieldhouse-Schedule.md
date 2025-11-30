@@ -6,9 +6,9 @@
 
 ##Created tables and insert statements
 
-***Coach Table***
+***Coach Table(create table)***
 
-```
+```sql
 
 CREATE TABLE Coach (
 	Coach_id INT auto_increment NOT NULL primary key,
@@ -17,9 +17,10 @@ CREATE TABLE Coach (
 	email varchar (50) not null,
 	phone char (14) not null
 ) Engine=InnoDB;
-```
+```` 
 
-```
+***Coach Table(Insert)***
+```sql
 INSERT INTO Coach(coach_id, first_name, last_name, email, phone) VALUES
 (100, 'Mary', 'Lane', 'LaneM@huntington.edu', '(260)-111-1111'),
 (101, 'Bobby', 'Cloud', 'CloudB@huntington.edu', '(260)-222-2222'),
