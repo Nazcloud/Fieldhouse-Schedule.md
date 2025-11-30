@@ -19,6 +19,7 @@ The second use of this database would be for everyone else, which is simply view
 ## ER Diagram
 ![ER DIAGRAM](FinalFieldhouseScheduleERDiagram.png)
 
+
 For my overall database I wanted to focus on the the biggest problem which was that there wasn't an actually schedule, but from the start I ran into the issue of who should be able to schedule. I didn't want anyone to be able to schedule because then you'd have lots of different areas booked with 1-3 people and then a team would just booked the same area and you'd get the same result, students getting overcrowded. Also if atheletic teams are needing that spot to practice for the sport they have to perform they wouldn't have a lot of options if everyone could schedule. To solve this problem I decided that only coaches would be able to book the fieldhose in this database and students could publicly view the schedule so that they can find times that work for them. This took away the trouble of registering students into this database, and solved the problem while still securing the schedule. 
 
 When making the ER diagram at first I ran into the problem that a coach could schedule many sports and a sport could have many coaches. To fix this problem I made the supervisor table which allowed one coach to supervisor over the scheduled event fixing the many to many relationship and the issues of assistant coaches, or trainers maybe being registered into the database.
@@ -479,8 +480,8 @@ rollback;
 ---
 ## Reports
 
-![ER DIAGRAM](Tabledatareport)
-![ER DIAGRAM](BarchartDatabasefinal)
+![ER DIAGRAM](Tabledatareport.png)
+![ER DIAGRAM](BarchartDatabasefinal.png)
 
 For my reports I used Power BI’s table, and clustered bar charts. The table I used allowed a report of a calendar like database that simply showed the date and everything that was going on then. For example, viewing the report allowed me to see that January 1st women’s volleyball had practice from 3:00-4:30.  This report was made largely due to the regular students not being aware of when practices occur so they can plan a schedule around busy fieldhouse area time. The clustered bar chart on the other hand has the purpose of showing the capacity of each fieldhouse area and the number of athletes from the sport. This report shows if a fieldhouse area is overbooked or if there is any space open. This database allows for overbooking.  
 
