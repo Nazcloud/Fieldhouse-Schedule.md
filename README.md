@@ -17,8 +17,54 @@ The second use of this database would be for everyone else, which is simply view
 
 ---
 ## ER Diagram
-![ER DIAGRAM](FinalFieldhouseScheduleERDiagram.png)
 
+```mermaid
+	erDiagram
+	direction TB
+	COACH {
+		int Coach_id PK "Auto increment, Primary key"  
+		VarChar first_name  "Not null"  
+		VarChar last_name  "Nullable"  
+		VarChar email  "Not null"  
+		Char phone  "Not null, char(14)"  
+	}
+
+	SUPERVISOR {
+		int Supervisor_id PK "Auto increment, Primary key"  
+		int Coach_id FK "Not null, Foreign key"  
+		int Sport_id FK "Not null, Foreign key"  
+	}
+
+	SCHEDULE_EVENTS {
+		int Schedule_id PK "Auto increment, Primary key"  
+		int Sport_id FK "Not null, Foreign key"  
+		int Area_id FK "Not null, Foreign key"  
+		int Coach_id FK "Not null, Foreign key"  
+		VarChar schedule_name  "varchar(150)"  
+		date DATE  "Not null"  
+		time start_time  "Not null"  
+		time end_time  "Not null"  
+	}
+
+	SPORT {
+		int Sport_id PK "Auto increment, Primary key"  
+		VarChar Sport_name  "Not null"  
+		int athlete_amount  "Nullable, tinyint"  
+	}
+
+	FIELD_AREAS {
+		int Area_id PK "Auto increment, Primary key"  
+		VarChar Area_name  "Unique, Not null, varchar(100)"  
+		string description  "Text"  
+		int capacity  "not null"  
+	}
+
+	COACH||--o{SUPERVISOR:"can be"
+	SPORT||--o{SUPERVISOR:"assigned to"
+	SPORT||--o{SCHEDULE_EVENTS:"scheduled for"
+	FIELD_AREAS||--o{SCHEDULE_EVENTS:"hosts"
+	COACH||--o{SCHEDULE_EVENTS:"coaches"
+```
 
 For my overall database I wanted to focus on the the biggest problem which was that there wasn't an actually schedule, but from the start I ran into the issue of who should be able to schedule. I didn't want anyone to be able to schedule because then you'd have lots of different areas booked with 1-3 people and then a team would just booked the same area and you'd get the same result, students getting overcrowded. Also if atheletic teams are needing that spot to practice for the sport they have to perform they wouldn't have a lot of options if everyone could schedule. To solve this problem I decided that only coaches would be able to book the fieldhose in this database and students could publicly view the schedule so that they can find times that work for them. This took away the trouble of registering students into this database, and solved the problem while still securing the schedule. 
 
