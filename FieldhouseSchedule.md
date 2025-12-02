@@ -446,7 +446,7 @@ WHERE schedule_id = 12;
 This would allow adminstrator to cancel scheduled event if anything occured. For example weather conditions, coach can't attend etc.
 
 ```sql
-DELETE FROM Schedule_Events
+DELETE FROM ScheduleEvents
 WHERE schedule_id = 12;
 ````
 
