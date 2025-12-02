@@ -139,7 +139,7 @@ CREATE TABLE ScheduleEvents (
 
 ```` 
 
-##Insert statements
+## Insert statements
 ```sql
 INSERT INTO Coach(coach_id, first_name, last_name, email, phone) VALUES
 (100, 'Mary', 'Lane', 'LaneM@huntington.edu', '(260)-111-1111'),
@@ -508,6 +508,17 @@ SET area_id = 3
 WHERE schedule_id = 12;
 
 rollback;
+````
+
+##Delete all tables and views
+
+```sql
+Drop table
+Coach, Sport, Supervisor, FieldAreas, ScheduleEvents;
+
+Drop view
+sport_area_coach_view
+
 ````
 
 ---
