@@ -76,9 +76,26 @@ Overall the database focuses on the scheduling of HU's athletics in the fieldhou
 
 ## Created tables and insert statements
 
-***Coach Table(Create Table)***:
+***Coach Table:***
 
 The purpose of this table is to register coaches in the database so that they can schedule their teams within the fieldhouse. It also includes their contact information for any further questions or scheduling changes.
+
+***Sport Table:***
+
+The purpose of this table is to register the different sports teams HU has into the database so users looking at the schedule know which team is occupying a that specific place in the fieldhouse.
+
+***Supervisor Table:***
+
+The purpose of this table is to help with the many to many relationship between coach and sports. This table registers coaches as supervisor over the sport.
+
+***FieldAreas Table:***
+
+The purpose of this table is to highlight specific areas within the fieldhouse that can be booked. It also gives users the capacity and and description of that area.
+
+***ScheduleEvents Table:***
+
+The purpose of this table is to set up the schedule of the entire fieldhouse for the specific day, and timeframe. This table also gives and event name so users know what is going on.
+
 
 ```sql
 
@@ -89,9 +106,40 @@ CREATE TABLE Coach (
 	email varchar (50) not null,
 	phone char (14) not null
 ) Engine=InnoDB;
+
+CREATE TABLE Sport (
+	Sport_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	Sport_name VARCHAR(40) NOT NULL,
+	athlete_amount tinyint NULL
+) ENGINE=innoDB;
+
+CREATE TABLE Supervisor (
+    supervisor_id INT AUTO_INCREMENT PRIMARY KEY,
+    coach_id INT NOT NULL,
+    sport_id INT NOT NULL
+    ) ENGINE=innoDB;
+
+CREATE TABLE FieldAreas (
+    area_id INT AUTO_INCREMENT PRIMARY KEY,
+    area_name VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT,
+    capacity tinyint NOT NULL
+    ) ENGINE=innoDB;
+
+CREATE TABLE ScheduleEvents (
+    schedule_id INT AUTO_INCREMENT PRIMARY KEY,
+    sport_id INT NOT NULL,
+    area_id INT NOT NULL,
+    coach_id INT NOT NULL,
+    schedule_name VARCHAR(150),
+    DATE DATE NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL
+    ) ENGINE=innoDB;
+
 ```` 
 
-***Coach Table(Insert)***
+##Insert statements
 ```sql
 INSERT INTO Coach(coach_id, first_name, last_name, email, phone) VALUES
 (100, 'Mary', 'Lane', 'LaneM@huntington.edu', '(260)-111-1111'),
@@ -185,21 +233,9 @@ INSERT INTO Coach(coach_id, first_name, last_name, email, phone) VALUES
 (188, 'Brittney', 'Hess', 'HessB@huntington.edu', '(260)-469-6005'),
 (189, 'Jared', 'Connelly', 'ConnellyJ@huntington.edu', '(260)-470-6106'),
 (199, 'Ariana', 'Russell', 'RussellA@huntington.edu', '(260)-471-6207');
-```
 
-***Sport(Create table)***:
 
-The purpose of this table is to register the different sports teams HU has into the database so users looking at the schedule know which team is occupying a that specific place in the fieldhouse.
-```sql
-CREATE TABLE Sport (
-	Sport_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-	Sport_name VARCHAR(40) NOT NULL,
-	athlete_amount tinyint NULL
-) ENGINE=innoDB;
-```
 
-***Sport(Insert)***
-```sql
 INSERT INTO Sport (sport_id, sport_name, athlete_amount) VALUES
 (200, 'Womens Volleyball', 35),
 (201, 'Track & Field Throws', 9),
@@ -221,24 +257,8 @@ INSERT INTO Sport (sport_id, sport_name, athlete_amount) VALUES
 (217, 'Mens pickleball', 15),
 (218, 'Womens Pickleball', 10),
 (219, 'Powerlifting', 8);
-````
-
-***Supervisor(Create table)***:
-
-The purpose of this table is to help with the many to many relationship between coach and sports. This table registers coaches as supervisor over the sport.
-```sql
-CREATE TABLE Supervisor (
-    supervisor_id INT AUTO_INCREMENT PRIMARY KEY,
-    coach_id INT NOT NULL,
-    sport_id INT NOT NULL
-    ) ENGINE=innoDB;
-
-````
 
 
-
-***Supervisor(Insert)***
-```sql
 INSERT INTO Supervisor (supervisor_id, coach_id, sport_id) VALUES
 (500, 100, 200),
 (501, 104, 204),
@@ -260,21 +280,8 @@ INSERT INTO Supervisor (supervisor_id, coach_id, sport_id) VALUES
 (517, 177, 212),
 (518, 181, 214),
 (519, 189, 213);
-````
 
-***FieldAreas(Create table)***:
 
-The purpose of this table is to highlight specific areas within the fieldhouse that can be booked. It also gives users the capacity and and description of that area.
-```sql
-CREATE TABLE FieldAreas (
-    area_id INT AUTO_INCREMENT PRIMARY KEY,
-    area_name VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT,
-    capacity tinyint NOT NULL
-    ) ENGINE=innoDB;
-````
-***FieldAreas(Insert)***:
-```sql
 INSERT INTO FieldAreas (area_id, area_name, description, capacity) VALUES
 (300, 'Court 1', 'left side entrance court', 45),
 (301, 'Court 2', 'middle court', 45),
@@ -297,27 +304,7 @@ INSERT INTO FieldAreas (area_id, area_name, description, capacity) VALUES
 (318, 'Sandpit', 'sand pit for long jump only', 20),
 (319, 'WR DB bench 1', 'benches infront of dumbells 1 and 2', 20),
 (320, 'WR Db bench 2', 'benches infront of dumbells 3 and 4', 20);
-````
 
-
-***ScheduleEvents(Create table)***:
-
-The purpose of this table is to set up the schedule of the entire fieldhouse for the specific day, and timeframe. This table also gives and event name so users know what is going on.
-```sql
-CREATE TABLE ScheduleEvents (
-    schedule_id INT AUTO_INCREMENT PRIMARY KEY,
-    sport_id INT NOT NULL,
-    area_id INT NOT NULL,
-    coach_id INT NOT NULL,
-    schedule_name VARCHAR(150),
-    DATE DATE NOT NULL,
-    start_time TIME NOT NULL,
-    end_time TIME NOT NULL
-    ) ENGINE=innoDB;
-````
-
-***ScheduleEvents(Insert)***
-```sql
 INSERT INTO ScheduleEvents (schedule_id, coach_id, sport_id, area_id, schedule_name, date, start_time, end_time) VALUES
 (700, 100, 200, 300, 'Womens Volleyball Practice','2025-01-01', '15:00', '16:30'),
 (701, 104, 204, 307, 'Sprints warmup','2025-01-02', '16:00', '17:30'),
