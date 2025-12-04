@@ -339,6 +339,40 @@ Select first_name, last_name
 order by last_name asc;
 ````
 
+**Sample Output**
+
+```sql
++------------+------------+
+| first_name | last_name  |
++------------+------------+
+| Max        | Arnold     |
+| Coby       | Baily      |
+| Trent      | Barlow     |
+| Aria       | Beck       |
+| Rachel     | Becker     |
+| Violet     | Benson     |
+| Layla      | Boss       |
+| Natalie    | Bowers     |
+| Keira      | Brooks     |
+| Trevor     | Burns      |
+| Josh       | Cameron    |
+| Matthew    | Caon       |
+| Jayda      | Carpenter  |
+| Aaron      | Carson     |
+| Finn       | Carter     |
+| Shawn      | Carver     |
+| Olivia     | Chambers   |
+| Bobby      | Cloud      |
+| Henry      | Cold       |
+| Miranda    | Colon      |
+| Jared      | Connelly   |
+| Brady      | Cooper     |
+| Maya       | Dixon      |
+| Lily       | Donovan    |
+| Shane      | Figueroa   |
+| Emily      | Foster     |
+```
+
 **2. SELECT using a calculated field with a meaningful column heading.**
 
 You would use this query if you wanted to know how many open slots there will be left open when a sport is practicing. This would allows those not in sports, or someone practicing outside of regular times to workout in open spaces.
@@ -356,6 +390,35 @@ JOIN Sport
     ON ScheduleEvents.Sport_id = Sport.Sport_id;
 ````
 
+**Sample Output**
+
+```sql
++------------------------------+------------+----------------------+----------+------------+
+| schedule_name                | date       | Area_name            | capacity | open_spots |
++------------------------------+------------+----------------------+----------+------------+
+| Womens Volleyball Practice   | 2025-01-01 | Court 1              |       45 |         10 |
+| Sprints warmup               | 2025-01-02 | Track Lanes          |       45 |         25 |
+| HighJump practice            | 2025-01-03 | WR Racks 7&8         |       20 |          0 |
+| Baseball practice            | 2025-01-04 | High Jump Mat        |       45 |          0 |
+| Womens soccer plyometrics    | 2025-01-05 | Polevault Mat        |       20 |        -20 |
+| Mens Tennis lifting          | 2025-01-05 | Small Weight Block 1 |       15 |         -5 |
+| Polevault lifting            | 2025-01-06 | Small Weight Block 2 |       15 |          3 |
+| Volleyball warmup            | 2025-01-07 | Court 2              |       45 |         10 |
+| Basketball warmup            | 2025-01-08 | Standard Tredmills   |       45 |         10 |
+| Crosscountry practice        | 2025-01-09 | Booster Tredmills    |       25 |         10 |
+| Sprints workout              | 2025-01-10 | Assault Tredmills    |       45 |         25 |
+| Womens tennis cross training | 2025-01-11 | Bikes                |        8 |        -12 |
+| Esports lifting              | 2025-01-12 | WR Racks 1&2         |       20 |        -10 |
+| Womens basketball lift       | 2025-01-13 | WR Racks 3&4         |       20 |        -10 |
+| Baseball lift                | 2025-01-14 | WR Racks 5&6         |       20 |        -25 |
+| softball practice            | 2025-01-15 | Court 3              |       45 |          5 |
+| Mens soccer lift             | 2025-01-16 | WR Racks 9&10        |       20 |        -10 |
+| Mens Volleyball lift         | 2025-01-17 | WR Racks 11&12       |       20 |          2 |
+| LongJump practice            | 2025-01-18 | Sandpit              |       20 |          0 |
+| Powerlift practice           | 2025-01-19 | WR DB bench 1        |       20 |         12 |
++------------------------------+------------+----------------------+----------+------------+
+```
+
 **3. SELECT using a MariaDB function (e.g., MID, MONTH, DATE) (not an aggregation).**
 
 This would allow admin to see the busiest months for booking. This allows admin to see which type of events occur the most during seasonal months (Track practice a lot in fall).
@@ -367,9 +430,39 @@ SELECT
 	FROM ScheduleEvents;
 ````
 
+**Sample Output**
+
+```sql
++------------------------------+------------+-------------+
+| schedule_name                | date       | event_month |
++------------------------------+------------+-------------+
+| Womens Volleyball Practice   | 2025-01-01 |           1 |
+| Sprints warmup               | 2025-01-02 |           1 |
+| HighJump practice            | 2025-01-03 |           1 |
+| Baseball practice            | 2025-01-04 |           1 |
+| Womens soccer plyometrics    | 2025-01-05 |           1 |
+| Mens Tennis lifting          | 2025-01-05 |           1 |
+| Polevault lifting            | 2025-01-06 |           1 |
+| Volleyball warmup            | 2025-01-07 |           1 |
+| Basketball warmup            | 2025-01-08 |           1 |
+| Crosscountry practice        | 2025-01-09 |           1 |
+| Sprints workout              | 2025-01-10 |           1 |
+| Womens tennis cross training | 2025-01-11 |           1 |
+| Esports lifting              | 2025-01-12 |           1 |
+| Womens basketball lift       | 2025-01-13 |           1 |
+| Baseball lift                | 2025-01-14 |           1 |
+| softball practice            | 2025-01-15 |           1 |
+| Mens soccer lift             | 2025-01-16 |           1 |
+| Mens Volleyball lift         | 2025-01-17 |           1 |
+| LongJump practice            | 2025-01-18 |           1 |
+| Powerlift practice           | 2025-01-19 |           1 |
++------------------------------+------------+-------------+
+```
+
 **4. SELECT with an aggregation (COUNT, SUM, MIN, AVG) plus GROUP BY and HAVING.**
 
 This would equip adminstrators to view the average amount of athletes in the area. This can then be shared with students as way of giving them an idea of which area is the busiest. 
+
 ```sql
 SELECT 
     FieldAreas.area_name,
@@ -386,6 +479,35 @@ GROUP BY
 HAVING 
     AVG(Sport.athlete_amount) > 0;
 ````
+
+**Sample Output***
+
+```sql
++----------------------+----------+----------------------+
+| area_name            | capacity | avg_athletes_in_area |
++----------------------+----------+----------------------+
+| Assault Tredmills    |       45 |              20.0000 |
+| Bikes                |        8 |              20.0000 |
+| Booster Tredmills    |       25 |              15.0000 |
+| Court 1              |       45 |              35.0000 |
+| Court 2              |       45 |              35.0000 |
+| Court 3              |       45 |              40.0000 |
+| High Jump Mat        |       45 |              45.0000 |
+| Polevault Mat        |       20 |              40.0000 |
+| Sandpit              |       20 |              20.0000 |
+| Small Weight Block 1 |       15 |              20.0000 |
+| Small Weight Block 2 |       15 |              12.0000 |
+| Standard Tredmills   |       45 |              35.0000 |
+| Track Lanes          |       45 |              20.0000 |
+| WR DB bench 1        |       20 |               8.0000 |
+| WR Racks 1&2         |       20 |              30.0000 |
+| WR Racks 11&12       |       20 |              18.0000 |
+| WR Racks 3&4         |       20 |              30.0000 |
+| WR Racks 5&6         |       20 |              45.0000 |
+| WR Racks 7&8         |       20 |              20.0000 |
+| WR Racks 9&10        |       20 |              30.0000 |
++----------------------+----------+----------------------+
+```
 
 **5. Join of three or more tables (INNER JOIN or cross-product).**
 
@@ -413,6 +535,40 @@ GROUP BY coach_id
 HAVING COUNT(sport_id) = 1);
 );
 ````
+**Sample Output**
+
+```sql
++----------------------------+------------+----------------------+--------------------------+------------+-----------+
+| schedule_name              | date       | area_name            | sport_name               | first_name | last_name |
++----------------------------+------------+----------------------+--------------------------+------------+-----------+
+| Womens Volleyball Practice | 2025-01-01 | Court 1              | Womens Volleyball        | Mary       | Lane      |
+| Volleyball warmup          | 2025-01-07 | Court 2              | Womens Volleyball        | Mary       | Lane      |
+| Sprints warmup             | 2025-01-02 | Track Lanes          | Track & Field Sprints    | Coby       | Baily     |
+| Sprints workout            | 2025-01-10 | Assault Tredmills    | Track & Field Sprints    | Coby       | Baily     |
+| HighJump practice          | 2025-01-03 | WR Racks 7&8         | Track & Field Jumps      | Austin     | Rark      |
+| LongJump practice          | 2025-01-18 | Sandpit              | Track & Field Jumps      | Austin     | Rark      |
+| Baseball practice          | 2025-01-04 | High Jump Mat        | Baseball                 | Aaron      | Carson    |
+| Baseball lift              | 2025-01-14 | WR Racks 5&6         | Baseball                 | Aaron      | Carson    |
+| Womens soccer plyometrics  | 2025-01-05 | Polevault Mat        | Womens Soccer            | Layla      | Boss      |
+| Mens Tennis lifting        | 2025-01-05 | Small Weight Block 1 | Women's tennis           | Luke       | Hill      |
+| Polevault lifting          | 2025-01-06 | Small Weight Block 2 | Track & Field Pole Vault | Jenna      | Rogers    |
+| Womens Volleyball Practice | 2025-01-01 | Court 1              | Womens Volleyball        | Jacob      | Hale      |
+| Volleyball warmup          | 2025-01-07 | Court 2              | Womens Volleyball        | Jacob      | Hale      |
+| Crosscountry practice      | 2025-01-09 | Booster Tredmills    | Cross country            | Clara      | Price     |
+| Powerlift practice         | 2025-01-19 | WR DB bench 1        | Powerlifting             | Noah       | Spencer   |
+| Mens soccer lift           | 2025-01-16 | WR Racks 9&10        | Men's Soccer             | Chase      | Morgan    |
+| Womens Volleyball Practice | 2025-01-01 | Court 1              | Womens Volleyball        | Olivia     | Chambers  |
+| Volleyball warmup          | 2025-01-07 | Court 2              | Womens Volleyball        | Olivia     | Chambers  |
+| Esports lifting            | 2025-01-12 | WR Racks 1&2         | Esports                  | Trevor     | Burns     |
+| Womens basketball lift     | 2025-01-13 | WR Racks 3&4         | Womens Basketball        | Natalie    | Bowers    |
+| Baseball practice          | 2025-01-04 | High Jump Mat        | Baseball                 | Maya       | Dixon     |
+| Baseball lift              | 2025-01-14 | WR Racks 5&6         | Baseball                 | Maya       | Dixon     |
+| softball practice          | 2025-01-15 | Court 3              | Softball                 | Ellie      | Walsh     |
+| Mens soccer lift           | 2025-01-16 | WR Racks 9&10        | Men's Soccer             | Reid       | Garcia    |
+| Mens Volleyball lift       | 2025-01-17 | WR Racks 11&12       | Mens volleyball          | Dallas     | Ritter    |
+| Esports lifting            | 2025-01-12 | WR Racks 1&2         | Esports                  | Jared      | Connelly  |
++----------------------------+------------+----------------------+--------------------------+------------+-----------+
+```
 
 **6. Left or Right JOIN (left, or right join).**
 
@@ -428,7 +584,15 @@ LEFT JOIN ScheduleEvents
 WHERE ScheduleEvents.schedule_id IS NULL;
 ````
 
+**Sample Output**
 
+```sql
++---------------+----------+
+| area_name     | capacity |
++---------------+----------+
+| WR Db bench 2 |       20 |
++---------------+----------+
+```
 
 **7. UPDATE query.**
 
@@ -438,8 +602,38 @@ This update helps if a sport needs to be moved to a different fieldhouse area. C
 UPDATE ScheduleEvents
 SET area_id = 3
 WHERE schedule_id = 12;
+
+Select * from ScheduleEvents
 ````
 
+**Sample Output**
+
+```sql
++-------------+----------+---------+----------+------------------------------+------------+------------+----------+
+| schedule_id | sport_id | area_id | coach_id | schedule_name                | DATE       | start_time | end_time |
++-------------+----------+---------+----------+------------------------------+------------+------------+----------+
+|         700 |      200 |     300 |      100 | Womens Volleyball Practice   | 2025-01-01 | 15:00:00   | 16:30:00 |
+|         701 |      204 |     307 |      104 | Sprints warmup               | 2025-01-02 | 16:00:00   | 17:30:00 |
+|         702 |      205 |     315 |      105 | HighJump practice            | 2025-01-03 | 09:00:00   | 10:30:00 |
+|         703 |      208 |     303 |      108 | Baseball practice            | 2025-01-04 | 10:30:00   | 12:00:00 |
+|         704 |      211 |     304 |      111 | Womens soccer plyometrics    | 2025-01-05 | 13:00:00   | 14:30:00 |
+|         705 |      215 |     305 |      115 | Mens Tennis lifting          | 2025-01-05 | 17:00:00   | 18:30:00 |
+|         706 |      202 |     306 |      121 | Polevault lifting            | 2025-01-06 | 08:00:00   | 09:30:00 |
+|         707 |      200 |     301 |      132 | Volleyball warmup            | 2025-01-07 | 11:00:00   | 12:30:00 |
+|         708 |      206 |     308 |      137 | Basketball warmup            | 2025-01-08 | 14:30:00   | 16:00:00 |
+|         709 |      203 |     309 |      135 | Crosscountry practice        | 2025-01-09 | 18:00:00   | 19:30:00 |
+|         710 |      204 |     310 |      140 | Sprints workout              | 2025-01-10 | 07:30:00   | 09:00:00 |
+|         711 |      216 |     311 |      143 | Womens tennis cross training | 2025-01-11 | 15:30:00   | 17:00:00 |
+|         712 |      213 |     312 |      152 | Esports lifting              | 2025-01-12 | 12:00:00   | 13:30:00 |
+|         713 |      207 |     313 |      157 | Womens basketball lift       | 2025-01-13 | 09:30:00   | 11:00:00 |
+|         714 |      208 |     314 |      161 | Baseball lift                | 2025-01-14 | 16:30:00   | 18:00:00 |
+|         715 |      209 |     302 |      165 | softball practice            | 2025-01-15 | 13:30:00   | 15:00:00 |
+|         716 |      210 |     316 |      168 | Mens soccer lift             | 2025-01-16 | 08:30:00   | 10:00:00 |
+|         717 |      212 |     317 |      177 | Mens Volleyball lift         | 2025-01-17 | 10:00:00   | 11:30:00 |
+|         718 |      205 |     318 |      181 | LongJump practice            | 2025-01-18 | 11:30:00   | 13:00:00 |
+|         719 |      219 |     319 |      189 | Powerlift practice           | 2025-01-19 | 14:00:00   | 15:30:00 |
++-------------+----------+---------+----------+------------------------------+------------+------------+----------+
+```
 
 **8. DELETE query.**
 
@@ -447,7 +641,36 @@ This would allow adminstrator to cancel scheduled event if anything occured. For
 
 ```sql
 DELETE FROM ScheduleEvents
-WHERE schedule_id = 12;
+WHERE schedule_id = 700;
+
+select * from ScheduleEvents
+````
+
+*Sample Output**
+```sql
++-------------+----------+---------+----------+------------------------------+------------+------------+----------+
+| schedule_id | sport_id | area_id | coach_id | schedule_name                | DATE       | start_time | end_time |
++-------------+----------+---------+----------+------------------------------+------------+------------+----------+
+|         701 |      204 |     307 |      104 | Sprints warmup               | 2025-01-02 | 16:00:00   | 17:30:00 |
+|         702 |      205 |     315 |      105 | HighJump practice            | 2025-01-03 | 09:00:00   | 10:30:00 |
+|         703 |      208 |     303 |      108 | Baseball practice            | 2025-01-04 | 10:30:00   | 12:00:00 |
+|         704 |      211 |     304 |      111 | Womens soccer plyometrics    | 2025-01-05 | 13:00:00   | 14:30:00 |
+|         705 |      215 |     305 |      115 | Mens Tennis lifting          | 2025-01-05 | 17:00:00   | 18:30:00 |
+|         706 |      202 |     306 |      121 | Polevault lifting            | 2025-01-06 | 08:00:00   | 09:30:00 |
+|         707 |      200 |     301 |      132 | Volleyball warmup            | 2025-01-07 | 11:00:00   | 12:30:00 |
+|         708 |      206 |     308 |      137 | Basketball warmup            | 2025-01-08 | 14:30:00   | 16:00:00 |
+|         709 |      203 |     309 |      135 | Crosscountry practice        | 2025-01-09 | 18:00:00   | 19:30:00 |
+|         710 |      204 |     310 |      140 | Sprints workout              | 2025-01-10 | 07:30:00   | 09:00:00 |
+|         711 |      216 |     311 |      143 | Womens tennis cross training | 2025-01-11 | 15:30:00   | 17:00:00 |
+|         712 |      213 |     312 |      152 | Esports lifting              | 2025-01-12 | 12:00:00   | 13:30:00 |
+|         713 |      207 |     313 |      157 | Womens basketball lift       | 2025-01-13 | 09:30:00   | 11:00:00 |
+|         714 |      208 |     314 |      161 | Baseball lift                | 2025-01-14 | 16:30:00   | 18:00:00 |
+|         715 |      209 |     302 |      165 | softball practice            | 2025-01-15 | 13:30:00   | 15:00:00 |
+|         716 |      210 |     316 |      168 | Mens soccer lift             | 2025-01-16 | 08:30:00   | 10:00:00 |
+|         717 |      212 |     317 |      177 | Mens Volleyball lift         | 2025-01-17 | 10:00:00   | 11:30:00 |
+|         718 |      205 |     318 |      181 | LongJump practice            | 2025-01-18 | 11:30:00   | 13:00:00 |
+|         719 |      219 |     319 |      189 | Powerlift practice           | 2025-01-19 | 14:00:00   | 15:30:00 |
++-------------+----------+---------+----------+------------------------------+------------+------------+----------+
 ````
 
 **9. Create a View and demonstrate using this view.**
@@ -494,8 +717,48 @@ LEFT JOIN SCHEDULEEVENTS
     ON SPORT.Sport_id = SCHEDULEEVENTS.Sport_id
 LEFT JOIN FIELDAREAS
     ON SCHEDULEEVENTS.Area_id = FIELDAREAS.Area_id;
+
+SELECT Sport_name, coach_full_name, Area_name, open_spots
+FROM sport_area_coach_view
+ORDER BY Sport_name;
 ````
 
+**Sample Output**
+```sql
++--------------------------+-----------------+----------------------+------------+
+| Sport_name               | coach_full_name | Area_name            | open_spots |
++--------------------------+-----------------+----------------------+------------+
+| Baseball                 | Aaron Carson    | High Jump Mat        |          0 |
+| Baseball                 | Maya Dixon      | High Jump Mat        |          0 |
+| Baseball                 | Aaron Carson    | WR Racks 5&6         |        -25 |
+| Baseball                 | Maya Dixon      | WR Racks 5&6         |        -25 |
+| Cross country            | Clara Price     | Booster Tredmills    |         10 |
+| Disc Goal                | NULL            | Bikes                |        -12 |
+| Esports                  | Trevor Burns    | WR Racks 1&2         |        -10 |
+| Esports                  | Jared Connelly  | WR Racks 1&2         |        -10 |
+| Men's Soccer             | Chase Morgan    | WR Racks 9&10        |        -10 |
+| Men's Soccer             | Reid Garcia     | WR Racks 9&10        |        -10 |
+| Men's tennis             | Elias Herrera   | NULL                 |       NULL |
+| Mens Basketball          | NULL            | Standard Tredmills   |         10 |
+| Mens pickleball          | NULL            | NULL                 |       NULL |
+| Mens volleyball          | Dallas Ritter   | WR Racks 11&12       |          2 |
+| Powerlifting             | Noah Spencer    | WR DB bench 1        |         12 |
+| Softball                 | Ellie Walsh     | Court 3              |          5 |
+| Track & Field Jumps      | Austin Rark     | WR Racks 7&8         |          0 |
+| Track & Field Jumps      | Austin Rark     | Sandpit              |          0 |
+| Track & Field Pole Vault | Jenna Rogers    | Small Weight Block 2 |          3 |
+| Track & Field Sprints    | Coby Baily      | Track Lanes          |         25 |
+| Track & Field Sprints    | Coby Baily      | Assault Tredmills    |         25 |
+| Track & Field Throws     | NULL            | NULL                 |       NULL |
+| Women's tennis           | Luke Hill       | Small Weight Block 1 |         -5 |
+| Womens Basketball        | Natalie Bowers  | WR Racks 3&4         |        -10 |
+| Womens Pickleball        | NULL            | NULL                 |       NULL |
+| Womens Soccer            | Layla Boss      | Polevault Mat        |        -20 |
+| Womens Volleyball        | Mary Lane       | Court 2              |         10 |
+| Womens Volleyball        | Jacob Hale      | Court 2              |         10 |
+| Womens Volleyball        | Olivia Chambers | Court 2              |         10 |
++--------------------------+-----------------+----------------------+------------+
+````
 **10. Create a Transaction with either ROLLBACK or COMMIT and demonstrate this transaction.**
 
 This would adminstrator to make a change to the database where the sport needs to be moved, but if it was a mistake to rollback to the original spot.
